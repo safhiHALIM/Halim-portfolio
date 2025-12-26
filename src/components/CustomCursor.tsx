@@ -5,6 +5,7 @@ import { motion, useMotionValue, useSpring } from "framer-motion";
 
 export default function CustomCursor() {
   const [isHovering, setIsHovering] = useState(false);
+  const [isTouchDevice, setIsTouchDevice] = useState(false);
   const cursorX = useMotionValue(-100);
   const cursorY = useMotionValue(-100);
 
@@ -13,9 +14,14 @@ export default function CustomCursor() {
   const cursorYSpring = useSpring(cursorY, springConfig);
 
   useEffect(() => {
+    const checkTouch = () => {
+      setIsTouchDevice('ontouchstart' in window || navigator.maxTouchPoints > 0);
+    };
+    checkTouch();
+
     const moveCursor = (e: MouseEvent) => {
-      cursorX.set(e.clientX - 16);
-      cursorY.set(e.clientY - 16);
+      cursorX.set(e.clientX - 8);
+      cursorY.set(e.clientY - 8);
     };
 
     const handleMouseOver = (e: MouseEvent) => {
@@ -42,6 +48,8 @@ export default function CustomCursor() {
     };
   }, [cursorX, cursorY]);
 
+  if (isTouchDevice) return null;
+
   return (
     <>
       {/* Main Dot */}
@@ -50,19 +58,21 @@ export default function CustomCursor() {
         style={{
           x: cursorXSpring,
           y: cursorYSpring,
-          scale: isHovering ? 0.5 : 1,
+          scale: isHovering ? 0.3 : 1,
         }}
       />
       
       {/* Outer Ring */}
       <motion.div
-        className="fixed top-0 left-0 w-8 h-8 border border-white rounded-full pointer-events-none z-[9998] mix-blend-difference"
+        className="fixed top-0 left-0 w-12 h-12 border border-white/30 rounded-full pointer-events-none z-[9998] shadow-[0_0_15px_rgba(255,255,255,0.1)]"
         style={{
           x: cursorXSpring,
           y: cursorYSpring,
-          translateX: -8,
-          translateY: -8,
-          scale: isHovering ? 1.5 : 1,
+          translateX: -16,
+          translateY: -16,
+          scale: isHovering ? 2.5 : 1,
+          backgroundColor: isHovering ? "rgba(255, 255, 255, 0.05)" : "transparent",
+          backdropFilter: isHovering ? "blur(2px)" : "none",
         }}
         transition={{ type: "spring", damping: 30, stiffness: 200 }}
       />

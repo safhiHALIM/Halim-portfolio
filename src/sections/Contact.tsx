@@ -2,20 +2,11 @@
 
 import { motion } from "framer-motion";
 import { Send } from "lucide-react";
-import { Canvas } from "@react-three/fiber";
-import { Stars } from "@react-three/drei";
 import AnimatedTitle from "@/components/AnimatedTitle";
 
 export default function Contact() {
   return (
-    <section className="min-h-screen py-20 relative flex items-center justify-center overflow-hidden">
-      {/* 3D Background */}
-      <div className="absolute inset-0 -z-10">
-        <Canvas>
-          <Stars radius={100} depth={50} count={5000} factor={4} saturation={0} fade speed={1} />
-        </Canvas>
-      </div>
-
+    <section id="contact" className="min-h-screen py-20 relative flex items-center justify-center overflow-hidden">
       <div className="container mx-auto px-4 relative z-10">
         <motion.div 
           initial={{ opacity: 0, y: 20 }}

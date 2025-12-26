@@ -1,0 +1,186 @@
+"use client";
+
+import { motion, useScroll, useTransform } from "framer-motion";
+import { useRef } from "react";
+import AnimatedTitle from "@/components/AnimatedTitle";
+import { Github, Linkedin, Twitter } from "lucide-react";
+
+const timelineData = [
+  { year: "2017-2020", title: "Specialized Technician in IT Development", description: "Institut Spécialisé de Technologie Appliquée cité de l'air." },
+  { year: "2020", title: "Software Developer", description: "Desktop application development at AXA Assurance Maroc using C# and .NET frameworks." },
+  { year: "2021-Present", title: "Self-Education", description: "MERN stack, Selenium, Scripting, Blockchain study, Making prompts." },
+  { year: "2022", title: "Web Developer", description: "Developed web solutions using JavaScript and modern web technologies at ECA-Assurances." },
+  { year: "2022", title: "Full Stack Web Developer", description: "Freelance development with Node.js, Python, and modern web technologies." },
+  { year: "2023", title: "GED & Document Management Specialist", description: "Expertise in document management systems and GED solutions at NATC FMCG." },
+].sort((a, b) => (a.year.split('-')[0] > b.year.split('-')[0] ? 1 : -1));
+
+const socialLinks = [
+  { icon: Github, label: "GitHub", url: "https://github.com/safhiHALIM" },
+  { icon: Linkedin, label: "LinkedIn", url: "https://www.linkedin.com/in/abdelhalim-safhi-600583263/" },
+  { icon: Twitter, label: "Twitter", url: "https://twitter.com" },
+];
+
+export default function About() {
+  const containerRef = useRef(null);
+  const { scrollYProgress } = useScroll({
+    target: containerRef,
+    offset: ["start end", "end start"],
+  });
+
+  const y = useTransform(scrollYProgress, [0, 1], [100, -100]);
+  const opacity = useTransform(scrollYProgress, [0, 0.5, 1], [0.3, 1, 0.3]);
+
+  return (
+    <section ref={containerRef} id="about" className="min-h-screen py-20 relative overflow-hidden flex flex-col justify-center">
+      {/* Animated Background Elements */}
+      <motion.div 
+        style={{ opacity }}
+        className="absolute top-0 right-0 w-1/3 h-full bg-gradient-to-l from-blue-900/20 to-transparent pointer-events-none blur-3xl" 
+      />
+      <motion.div 
+        style={{ opacity }}
+        className="absolute bottom-0 left-0 w-1/3 h-full bg-gradient-to-r from-purple-900/20 to-transparent pointer-events-none blur-3xl" 
+      />
+
+      {/* Floating accent orbs */}
+      <div className="absolute top-20 right-1/4 w-96 h-96 bg-blue-500/10 rounded-full blur-3xl pointer-events-none animate-pulse" />
+      <div className="absolute -bottom-20 left-1/4 w-80 h-80 bg-purple-500/10 rounded-full blur-3xl pointer-events-none animate-pulse" />
+
+      <div className="container mx-auto px-4 grid md:grid-cols-2 gap-16 items-center mb-24 relative z-10">
+        <motion.div style={{ y }} className="relative">
+          <div className="mb-6 inline-block">
+            <motion.div 
+              initial={{ opacity: 0, scale: 0.8 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.5 }}
+              viewport={{ once: true }}
+              className="px-4 py-2 rounded-full bg-gradient-to-r from-blue-500/20 to-purple-500/20 border border-blue-400/30 backdrop-blur-sm"
+            >
+              <span className="text-sm font-semibold bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">Welcome to my portfolio</span>
+            </motion.div>
+          </div>
+          
+          <AnimatedTitle 
+            text="About Me" 
+            className="text-5xl md:text-7xl font-bold mb-10 bg-gradient-to-r from-white via-blue-200 to-white bg-clip-text text-transparent leading-tight"
+          />
+          
+          <div className="space-y-6 text-lg leading-relaxed">
+            <motion.p
+              initial={{ opacity: 0, x: -30 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.5, delay: 0.1 }}
+              viewport={{ once: true }}
+              className="text-gray-300 text-lg"
+            >
+              I’m an <span className="bg-gradient-to-r from-blue-400 to-blue-300 bg-clip-text text-transparent font-bold">experienced software developer</span> passionate about programming and building smart, user-centric solutions. I specialize in <span className="text-white/90">Microsoft technologies</span> with strong expertise in <span className="text-white/90">C#, C, and SQL Server</span>, but I also thrive in <span className="bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent font-bold">full-stack web development</span>—crafting everything from backend APIs to engaging frontend interfaces.
+            </motion.p>
+            
+            <motion.p
+              initial={{ opacity: 0, x: -30 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.5, delay: 0.2 }}
+              viewport={{ once: true }}
+              className="text-gray-300 text-lg"
+            >
+              On the backend, I build robust services with <span className="text-white/90">Node.js and Express</span>, design scalable data models with <span className="text-white/90">MongoDB</span>, and integrate business logic that performs under real-world loads. On the frontend, I create dynamic, responsive user experiences using <span className="text-white/90">React (part of the MERN stack)</span> while ensuring seamless interaction between client and server. Using modern full-stack stacks like MERN lets me deliver cohesive applications with a single language across the entire web stack, increasing efficiency and reducing friction.
+            </motion.p>
+            
+            <motion.p
+              initial={{ opacity: 0, x: -30 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.5, delay: 0.3 }}
+              viewport={{ once: true }}
+              className="text-gray-300 text-lg"
+            >
+              I also have solid experience in <span className="bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent font-bold">event-driven and object-oriented programming</span>, desktop apps with <span className="text-white/90">C#/.NET (ADO.NET, ASP.NET, Entity Framework, Xamarin)</span>, and advanced <span className="text-white/90">analysis/design methods (UML, MERISE)</span>. I’m passionate about efficient, scalable code that solves real problems—and occasionally makes other developers smile.
+            </motion.p>
+
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.4 }}
+              viewport={{ once: true }}
+              className="pt-6 flex flex-wrap gap-4"
+            >
+              {["C#", ".NET", "SQL Server", "Node.js", "MongoDB", "React", "Xamarin", "UML"].map((tech, i) => (
+                <span 
+                  key={i}
+                  className="px-4 py-2 rounded-lg bg-gradient-to-r from-blue-500/10 to-purple-500/10 border border-blue-400/20 text-blue-300 text-sm font-medium hover:border-blue-400/50 transition-colors duration-300 cursor-default"
+                >
+                  {tech}
+                </span>
+              ))}
+            </motion.div>
+          </div>
+        </motion.div>
+
+        {/* Enhanced Avatar Container */}
+        <motion.div 
+          initial={{ opacity: 0, scale: 0.9 }}
+          whileInView={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.6 }}
+          viewport={{ once: true }}
+          className="relative h-[400px] md:h-[550px] group"
+        >
+          <div className="absolute inset-0 bg-gradient-to-br from-blue-500/20 to-purple-500/20 rounded-3xl overflow-hidden border border-white/10 backdrop-blur-xl shadow-2xl group-hover:border-blue-400/50 transition-all duration-500">
+            {/* Grid background */}
+            <div className="absolute inset-0 bg-[url('/grid.svg')] opacity-10" />
+            
+            {/* Gradient overlays */}
+            <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent" />
+            <div className="absolute inset-0 bg-gradient-to-r from-blue-600/10 via-transparent to-purple-600/10" />
+          </div>
+
+          {/* Content */}
+          <div className="absolute inset-0 flex flex-col items-center justify-center p-8">
+            <motion.div 
+              className="flex items-center justify-center"
+              whileHover={{ scale: 1.08 }}
+              transition={{ duration: 0.3 }}
+            >
+              <motion.img 
+                src="/avatar.png"
+                alt="Avatar"
+                className="w-72 h-72 md:w-96 md:h-96 rounded-full drop-shadow-[0_20px_40px_rgba(59,130,246,0.3)] object-cover"
+                animate={{ y: [0, -20, 0] }}
+                transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+              />
+            </motion.div>
+          </div>
+
+          {/* Social Media Icons on Hover */}
+          <div className="absolute inset-0 flex items-end justify-center pb-12 opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-gradient-to-t from-black/60 to-transparent rounded-3xl">
+            <div className="flex gap-6">
+              {socialLinks.map((social, index) => {
+                const Icon = social.icon;
+                return (
+                  <motion.a
+                    key={index}
+                    href={social.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    initial={{ y: 20, opacity: 0 }}
+                    animate={{ y: 0, opacity: 1 }}
+                    transition={{ delay: index * 0.1 + 0.1 }}
+                    whileHover={{ scale: 1.2, y: -5 }}
+                    whileTap={{ scale: 0.95 }}
+                    className="p-4 rounded-full bg-white/10 backdrop-blur-sm border border-white/20 text-white hover:bg-white/20 hover:border-blue-400/50 transition-all duration-300"
+                    aria-label={social.label}
+                  >
+                    <Icon size={28} />
+                  </motion.a>
+                );
+              })}
+            </div>
+          </div>
+
+          {/* Corner accent */}
+          <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-blue-500/20 to-transparent rounded-full -translate-y-1/2 translate-x-1/2 blur-2xl" />
+          <div className="absolute bottom-0 left-0 w-32 h-32 bg-gradient-to-tr from-purple-500/20 to-transparent rounded-full translate-y-1/2 -translate-x-1/2 blur-2xl" />
+        </motion.div>
+      </div>
+      
+    </section>
+  );
+}

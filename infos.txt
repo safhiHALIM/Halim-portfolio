@@ -1,0 +1,68 @@
+experience and client part eduction add button qui affiche un modale modern compatible avec le théme du site contient ca : Below is a polished, portfolio-ready **“Education & Technical Skills” / “Professional Profile”** version of your content, written in clear, professional English and suitable for a CV, LinkedIn, or personal website.
+
+---
+
+## Professional Profile
+
+I am an experienced software developer with a strong passion for programming and problem-solving, specialized in Microsoft technologies. My core expertise includes **C#**, **C**, and **SQL Server**, with a solid foundation in building robust, maintainable applications.
+
+I have extensive experience in **object-oriented** and **event-driven programming**, as well as in the development of **desktop and enterprise applications** using **C# and the .NET ecosystem**, including **ADO.NET**, **ASP.NET**, **Entity Framework**, and **Xamarin**.
+
+In addition, I have hands-on experience in **web development**, working with **Node.js**, **Express.js**, and **MongoDB** to design and implement scalable backend solutions and RESTful APIs.
+
+I also possess strong skills in **software analysis and system design**, applying industry-standard methodologies such as **UML** and **MERISE** to model, structure, and optimize complex systems. I am particularly motivated by creating **efficient, scalable, and high-impact solutions** that deliver real value.
+
+---
+
+## Technical Skills
+
+**Programming Languages**
+
+* C#
+* C
+
+**Microsoft & .NET Technologies**
+
+* .NET Framework / .NET
+* ADO.NET
+* ASP.NET
+* Entity Framework
+* Xamarin
+
+**Databases**
+
+* SQL Server
+* MongoDB
+
+**Web & Backend Development**
+
+* Node.js
+* Express.js
+* RESTful APIs
+
+**Analysis & Design**
+
+* UML
+* MERISE
+* Object-Oriented Design (OOD)
+* Event-Driven Architecture
+
+---
+
+( can you use icons )
+
+
+Career History : 
+================
+ part 
+Freelance
+
+Developed web applications using Node.js, Python, Express, and MongoDB. Specialized in scalable backend solutions. 
+update  from 1 jan 2023 to now 
+
+ Jul 2022
+Web Developer
+ECA-Assurances
+
+Developed web solutions using JavaScript and modern web technologies.
+(update desktop developer)

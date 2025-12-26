@@ -8,13 +8,15 @@ interface AnimatedTitleProps {
   className?: string;
   wordSpace?: string;
   charSpace?: string;
+  as?: "h1" | "h2" | "h3" | "h4" | "h5" | "h6";
 }
 
 export default function AnimatedTitle({ 
   text, 
   className = "", 
   wordSpace = "mr-[0.25em]", 
-  charSpace = "mr-[-0.05em]" 
+  charSpace = "mr-[-0.05em]",
+  as: Tag = "h2"
 }: AnimatedTitleProps) {
   const ref = useRef(null);
   const isInView = useInView(ref, { amount: 0.5, once: true });
@@ -34,7 +36,7 @@ export default function AnimatedTitle({
   };
 
   return (
-    <h2 ref={ref} className={`font-bold ${className}`}>
+    <Tag ref={ref} className={`${className}`}>
       <span className="sr-only">{text}</span>
       <motion.span
         initial="hidden"
@@ -43,11 +45,11 @@ export default function AnimatedTitle({
         aria-hidden
       >
         {text.split(" ").map((word, i) => (
-          <span key={i} className={`inline-block ${wordSpace}`}>
+          <span key={i} className={`${wordSpace}`}>
             {word.split("").map((char, j) => (
               <motion.span
                 key={j}
-                className={`inline-block ${charSpace}`}
+                className={`${charSpace}`}
                 variants={defaultAnimations}
               >
                 {char}
@@ -56,6 +58,6 @@ export default function AnimatedTitle({
           </span>
         ))}
       </motion.span>
-    </h2>
+    </Tag>
   );
 }

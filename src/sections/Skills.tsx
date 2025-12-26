@@ -19,7 +19,7 @@ import {
   Layout
 } from "lucide-react";
 
-type Category = "All" | "Frontend" | "Backend" | "Mobile" | "3D/Motion";
+type Category = "All" | "Frontend" | "Backend" | "Desktop" | "Databases" | "Design";
 
 interface Skill {
   name: string;
@@ -29,21 +29,24 @@ interface Skill {
 
 const skills: Skill[] = [
   { name: "React", category: "Frontend", icon: <Code2 size={24} /> },
-  { name: "TypeScript", category: "Frontend", icon: <Braces size={24} /> },
-  { name: "Next.js", category: "Frontend", icon: <Globe size={24} /> },
-  { name: "TailwindCSS", category: "Frontend", icon: <Palette size={24} /> },
+  { name: "JavaScript", category: "Frontend", icon: <Braces size={24} /> },
+  { name: "HTML/CSS", category: "Frontend", icon: <Palette size={24} /> },
   { name: "Node.js", category: "Backend", icon: <Server size={24} /> },
-  { name: "Python", category: "Backend", icon: <Terminal size={24} /> },
-  { name: "C# .NET", category: "Backend", icon: <Cpu size={24} /> },
-  { name: "Flutter", category: "Mobile", icon: <Smartphone size={24} /> },
-  { name: "Three.js", category: "3D/Motion", icon: <Box size={24} /> },
-  { name: "R3F", category: "3D/Motion", icon: <Layers size={24} /> },
-  { name: "GSAP", category: "3D/Motion", icon: <Workflow size={24} /> },
-  { name: "Framer Motion", category: "3D/Motion", icon: <Layout size={24} /> },
-  { name: "WebGL", category: "3D/Motion", icon: <Database size={24} /> },
+  { name: "Express", category: "Backend", icon: <Terminal size={24} /> },
+  { name: "Python", category: "Backend", icon: <Cpu size={24} /> },
+  { name: "C#", category: "Backend", icon: <Code2 size={24} /> },
+  { name: "ASP.NET", category: "Backend", icon: <Globe size={24} /> },
+  { name: "C#.NET Desktop", category: "Desktop", icon: <Smartphone size={24} /> },
+  { name: "Xamarin", category: "Desktop", icon: <Box size={24} /> },
+  { name: "ADO.NET", category: "Desktop", icon: <Layers size={24} /> },
+  { name: "Entity Framework", category: "Desktop", icon: <Workflow size={24} /> },
+  { name: "SQL Server", category: "Databases", icon: <Database size={24} /> },
+  { name: "MongoDB", category: "Databases", icon: <Database size={24} /> },
+  { name: "UML", category: "Design", icon: <Layout size={24} /> },
+  { name: "MERISE", category: "Design", icon: <Workflow size={24} /> },
 ];
 
-const categories: Category[] = ["All", "Frontend", "Backend", "Mobile", "3D/Motion"];
+const categories: Category[] = ["All", "Frontend", "Backend", "Desktop", "Databases", "Design"];
 
 export default function Skills() {
   const [activeCategory, setActiveCategory] = useState<Category>("All");

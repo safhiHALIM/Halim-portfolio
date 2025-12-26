@@ -1,214 +1,154 @@
 "use client";
 
 import { motion, useScroll, useTransform } from "framer-motion";
-import { useRef } from "react";
+import { useRef, useEffect, useState } from "react";
 import AnimatedTitle from "@/components/AnimatedTitle";
-
-const timelineData = [
-  { year: "2024", title: "Senior Frontend Architect", description: "Leading frontend architecture for enterprise-scale applications." },
-  { year: "2022", title: "Full Stack Developer", description: "Building scalable web and mobile solutions using React and Node.js." },
-  { year: "2020", title: "Creative Developer", description: "Specializing in 3D web experiences and interactive UI/UX." },
-];
+import StyledText from "@/components/ui/StyledText";
+import { professionalProfile, technicalSkills, socialLinks, aboutMe } from "@/app/data";
 
 export default function About() {
   const containerRef = useRef(null);
+  const [isLargeScreen, setIsLargeScreen] = useState(false);
+
+  useEffect(() => {
+    const checkScreenSize = () => {
+      setIsLargeScreen(window.innerWidth > 1024);
+    };
+
+    checkScreenSize();
+    window.addEventListener('resize', checkScreenSize);
+    return () => window.removeEventListener('resize', checkScreenSize);
+  }, []);
+
   const { scrollYProgress } = useScroll({
     target: containerRef,
     offset: ["start end", "end start"],
   });
 
   const y = useTransform(scrollYProgress, [0, 1], [100, -100]);
-  const opacity = useTransform(scrollYProgress, [0, 0.5, 1], [0.3, 1, 0.3]);
+  const opacity = useTransform(scrollYProgress, [0, 0.2, 0.8, 1], [0, 1, 1, 0]);
+  const scale = useTransform(scrollYProgress, [0, 0.2], [0.8, 1]);
 
   return (
-    <section ref={containerRef} className="min-h-screen py-20 relative overflow-hidden flex flex-col justify-center">
-      {/* Animated Background Elements */}
-      <motion.div 
-        style={{ opacity }}
-        className="absolute top-0 right-0 w-1/3 h-full bg-gradient-to-l from-blue-900/20 to-transparent pointer-events-none blur-3xl" 
-      />
-      <motion.div 
-        style={{ opacity }}
-        className="absolute bottom-0 left-0 w-1/3 h-full bg-gradient-to-r from-purple-900/20 to-transparent pointer-events-none blur-3xl" 
-      />
+    <section ref={containerRef} id="about" className="min-h-screen py-16 md:py-24 relative overflow-hidden flex flex-col justify-center bg-black/50">
+      {/* Dynamic Background Elements */}
+      <div className="absolute inset-0 pointer-events-none">
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-full bg-[radial-gradient(circle_at_50%_50%,_rgba(59,130,246,0.1),transparent_70%)]" />
+        <div className="absolute inset-0 bg-[url('/grid.svg')] bg-center [mask-image:linear-gradient(180deg,white,rgba(255,255,255,0))]" />
+      </div>
 
-      {/* Floating accent orbs */}
-      <div className="absolute top-20 right-1/4 w-96 h-96 bg-blue-500/10 rounded-full blur-3xl pointer-events-none animate-pulse" />
-      <div className="absolute -bottom-20 left-1/4 w-80 h-80 bg-purple-500/10 rounded-full blur-3xl pointer-events-none animate-pulse" />
+      <div className="container mx-auto px-4 relative z-10">
+        <motion.div 
+          style={{ opacity, scale }}
+          className="grid lg:grid-cols-2 gap-16 items-center"
+        >
+          {/* Left Column: Text Content */}
+          <div className="space-y-8">
+            <div className="space-y-4">
+              <motion.div
+                initial={{ opacity: 0, x: -20 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.5 }}
+                viewport={{ once: true }}
+                className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-500/10 border border-blue-500/20 text-blue-400 text-sm font-medium"
+              >
+                <span className="relative flex h-2 w-2">
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-400 opacity-75"></span>
+                  <span className="relative inline-flex rounded-full h-2 w-2 bg-blue-500"></span>
+                </span>
+                About Me
+              </motion.div>
+              
+              <AnimatedTitle 
+                text="Crafting Digital Excellence" 
+                className="text-4xl md:text-6xl font-bold text-white leading-tight"
+              />
+            </div>
 
-      <div className="container mx-auto px-4 grid md:grid-cols-2 gap-16 items-center mb-24 relative z-10">
-        <motion.div style={{ y }} className="relative">
-          <div className="mb-6 inline-block">
+            <div className="space-y-6 text-gray-400 leading-relaxed">
+              {professionalProfile.map((paragraph, index) => (
+                <motion.p
+                  key={index}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.5, delay: index * 0.1 }}
+                  viewport={{ once: true }}
+                  className="text-lg md:text-xl"
+                >
+                  <StyledText text={paragraph} />
+                </motion.p>
+              ))}
+            </div>
+
             <motion.div 
-              initial={{ opacity: 0, scale: 0.8 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.5 }}
-              viewport={{ once: true }}
-              className="px-4 py-2 rounded-full bg-gradient-to-r from-blue-500/20 to-purple-500/20 border border-blue-400/30 backdrop-blur-sm"
-            >
-              <span className="text-sm font-semibold bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">Welcome to my portfolio</span>
-            </motion.div>
-          </div>
-          
-          <AnimatedTitle 
-            text="About Me" 
-            className="text-5xl md:text-7xl font-bold mb-10 bg-gradient-to-r from-white via-blue-200 to-white bg-clip-text text-transparent leading-tight"
-          />
-          
-          <div className="space-y-6 text-lg leading-relaxed">
-            <motion.p
-              initial={{ opacity: 0, x: -30 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.5, delay: 0.1 }}
-              viewport={{ once: true }}
-              className="text-gray-300 text-lg"
-            >
-              I am a <span className="bg-gradient-to-r from-blue-400 to-blue-300 bg-clip-text text-transparent font-bold">Senior Frontend Architect</span> with a passion for crafting immersive, performant digital experiences that captivate and engage users globally.
-            </motion.p>
-            
-            <motion.p
-              initial={{ opacity: 0, x: -30 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.5, delay: 0.2 }}
-              viewport={{ once: true }}
-              className="text-gray-300 text-lg"
-            >
-              My expertise spans <span className="bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent font-bold">Full-Stack Development</span> across multiple domains — proficient in 
-              <span className="text-white/90"> React, Next.js, Python, C# .NET, and Flutter</span>. I excel at bridging the gap between elegant design and robust engineering.
-            </motion.p>
-            
-            <motion.p
-              initial={{ opacity: 0, x: -30 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.5, delay: 0.3 }}
-              viewport={{ once: true }}
-              className="text-gray-300 text-lg"
-            >
-              My mission is to architect and deliver <span className="text-white/90">performant, accessible, and visually stunning applications</span> that make a lasting impression on international clients and users worldwide.
-            </motion.p>
-
-            <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.4 }}
               viewport={{ once: true }}
-              className="pt-6 flex flex-wrap gap-4"
+              className="flex flex-wrap gap-3"
             >
-              {["React", "Next.js", "TypeScript", "3D Web"].map((tech, i) => (
+              {technicalSkills.slice(0, 8).map((skill, i) => (
                 <span 
                   key={i}
-                  className="px-4 py-2 rounded-lg bg-gradient-to-r from-blue-500/10 to-purple-500/10 border border-blue-400/20 text-blue-300 text-sm font-medium hover:border-blue-400/50 transition-colors duration-300 cursor-default"
+                  className="px-4 py-2 rounded-xl bg-white/5 border border-white/10 text-white/70 text-sm font-medium hover:bg-white/10 hover:border-blue-500/50 transition-all duration-300"
                 >
-                  {tech}
+                  {skill}
                 </span>
               ))}
             </motion.div>
           </div>
-        </motion.div>
 
-        {/* Enhanced Avatar Container */}
-        <motion.div 
-          initial={{ opacity: 0, scale: 0.9 }}
-          whileInView={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.6 }}
-          viewport={{ once: true }}
-          className="relative h-[400px] md:h-[550px]"
-        >
-          <div className="absolute inset-0 bg-gradient-to-br from-blue-500/20 to-purple-500/20 rounded-3xl overflow-hidden border border-white/10 backdrop-blur-xl shadow-2xl group hover:border-blue-400/50 transition-all duration-500">
-            {/* Grid background */}
-            <div className="absolute inset-0 bg-[url('/grid.svg')] opacity-10" />
-            
-            {/* Gradient overlays */}
-            <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent" />
-            <div className="absolute inset-0 bg-gradient-to-r from-blue-600/10 via-transparent to-purple-600/10" />
-          </div>
-
-          {/* Content */}
-          <div className="absolute inset-0 flex items-center justify-center">
-            <motion.div 
-              className="text-center"
-              whileHover={{ scale: 1.05 }}
-              transition={{ duration: 0.3 }}
+          {/* Right Column: Advanced Avatar Display */}
+          <div className="relative group lg:order-last order-first mb-12 lg:mb-0">
+            <motion.div
+              style={{ y: isLargeScreen ? y : 0 }}
+              className="relative aspect-[4/5] w-full max-w-[320px] sm:max-w-[400px] lg:max-w-[550px] mx-auto"
             >
-              <motion.span 
-                className="text-9xl drop-shadow-2xl inline-block"
-                animate={{ y: [0, -10, 0] }}
-                transition={{ duration: 3, repeat: Infinity }}
-              >
-                👨‍💻
-              </motion.span>
-              <motion.p 
-                initial={{ opacity: 0, y: 10 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: 0.3 }}
-                viewport={{ once: true }}
-                className="mt-8 text-gray-400 font-mono text-xs tracking-widest uppercase bg-gradient-to-r from-blue-400/30 to-purple-400/30 px-4 py-2 rounded-full inline-block border border-blue-400/20"
-              >
-                3D Avatar Coming Soon
-              </motion.p>
-            </motion.div>
-          </div>
-
-          {/* Corner accent */}
-          <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-blue-500/20 to-transparent rounded-full -translate-y-1/2 translate-x-1/2 blur-2xl" />
-          <div className="absolute bottom-0 left-0 w-32 h-32 bg-gradient-to-tr from-purple-500/20 to-transparent rounded-full translate-y-1/2 -translate-x-1/2 blur-2xl" />
-        </motion.div>
-      </div>
-
-      {/* Timeline Section */}
-      <div className="container mx-auto px-4 relative z-10">
-        <div className="mb-16">
-          <div className="inline-block">
-            <AnimatedTitle 
-              text="My Journey" 
-              className="text-3xl md:text-5xl font-bold bg-gradient-to-r from-white to-blue-200 bg-clip-text text-transparent"
-            />
-          </div>
-        </div>
-        
-        <div className="grid md:grid-cols-3 gap-8">
-          {timelineData.map((item, index) => (
-            <motion.div 
-              key={index}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: index * 0.15 }}
-              viewport={{ once: true }}
-              whileHover={{ y: -10 }}
-              className="group relative"
-            >
-              <div className="relative h-full p-8 rounded-2xl bg-gradient-to-br from-blue-500/10 to-purple-500/5 border border-blue-400/20 backdrop-blur-sm hover:border-blue-400/50 transition-all duration-500 overflow-hidden">
+              {/* Decorative Rings */}
+              <div className="absolute inset-0 rounded-[2rem] border-2 border-blue-500/20 animate-[spin_20s_linear_infinite]" />
+              <div className="absolute inset-4 rounded-[1.5rem] border border-purple-500/20 animate-[spin_15s_linear_infinite_reverse]" />
+              
+              {/* Main Container */}
+              <div className="absolute inset-8 rounded-3xl bg-gradient-to-br from-blue-600/20 to-purple-600/20 backdrop-blur-2xl border border-white/10 overflow-hidden group-hover:border-blue-500/50 transition-all duration-700 shadow-2xl flex flex-col">
+                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent z-10 pointer-events-none" />
                 
-                {/* Gradient background on hover */}
-                <div className="absolute inset-0 bg-gradient-to-br from-blue-500/20 to-purple-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                
-                {/* Content */}
-                <div className="relative z-10">
-                  <motion.span 
-                    className="text-sm font-bold bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent font-mono"
-                    initial={{ opacity: 0 }}
-                    whileInView={{ opacity: 1 }}
-                    transition={{ duration: 0.5, delay: index * 0.15 + 0.2 }}
-                    viewport={{ once: true }}
-                  >
-                    {item.year}
-                  </motion.span>
-                  
-                  <h4 className="text-xl font-bold mt-4 group-hover:text-blue-300 transition-colors duration-300 text-white">
-                    {item.title}
-                  </h4>
-                  
-                  <p className="text-gray-400 mt-3 text-sm leading-relaxed">
-                    {item.description}
-                  </p>
+                {/* Avatar Image Container */}
+                <div className="flex-1 relative overflow-hidden">
+                  <motion.img
+                    src={aboutMe.avatar}
+                    alt="Avatar"
+                    className="w-full h-full object-cover scale-110 group-hover:scale-100 transition-transform duration-700 ease-out"
+                  />
                 </div>
 
-                {/* Accent dot */}
-                <div className="absolute top-6 right-6 w-2 h-2 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full opacity-60 group-hover:opacity-100 transition-opacity duration-300" />
+                {/* Social Bar - Integrated inside the frame */}
+                <div className="h-24 bg-black/40 backdrop-blur-md border-t border-white/10 flex items-center justify-center gap-6 z-20 relative px-4">
+                  {socialLinks.map((social, index) => {
+                    const Icon = social.icon;
+                    return (
+                      <motion.a
+                        key={index}
+                        href={social.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        whileHover={{ scale: 1.2, y: -5 }}
+                        whileTap={{ scale: 0.9 }}
+                        className="p-3 rounded-xl bg-white/5 border border-white/10 text-white hover:bg-blue-600 hover:border-blue-500 transition-all duration-300"
+                        aria-label={social.label}
+                      >
+                        <Icon size={22} />
+                      </motion.a>
+                    );
+                  })}
+                </div>
               </div>
+
+              {/* Glowing Accents */}
+              <div className="absolute -top-10 -right-10 w-40 h-40 bg-blue-500/20 rounded-full blur-3xl group-hover:bg-blue-500/40 transition-all duration-700 animate-subtle-pulse-blue" />
+              <div className="absolute -bottom-10 -left-10 w-40 h-40 bg-purple-500/20 rounded-full blur-3xl group-hover:bg-purple-500/40 transition-all duration-700 animate-subtle-pulse-purple" />
             </motion.div>
-          ))}
-        </div>
+          </div>
+        </motion.div>
       </div>
     </section>
   );
